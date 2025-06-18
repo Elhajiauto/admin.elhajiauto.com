@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "Exemple Car",
+    "year": 2020,
+    "mileage": "100 000 km",
+    "price": "120 000 DH",
+    "fuel": "Diesel",
+    "transmission": "Manuel",
+    "power": "110 ch",
+    "color": "Gris",
+    "images": ["https://example.com/image.jpg"],
+    "description": "Ceci est une voiture d'exemple."
+  }
+]
