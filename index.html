@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>ElHaji Auto - Voitures</title>
 
   <!-- Firebase CDN -->
@@ -13,6 +13,7 @@
       font-family: Arial, sans-serif;
       background-color: #f8f8f8;
       padding: 30px;
+      margin: 0;
     }
     h1 {
       text-align: center;
@@ -43,7 +44,7 @@
   <div id="carList"></div>
 
   <script>
-    // 🔧 Firebase Config (ديالك)
+    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyC0YUGE6hRG9sck7rXcqjaB3he1nRGgbbU",
       authDomain: "elhaji-auto.firebaseapp.com",
@@ -53,13 +54,13 @@
       appId: "1:596529784342:web:dfa01b1e33287ce36db737"
     };
 
-    // ✅ Initialisation
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
     const carList = document.getElementById("carList");
 
-    // 🔁 Get all cars from "voitures"
+    // Fetch and display cars
     db.collection("voitures").get().then(snapshot => {
       snapshot.forEach(doc => {
         const car = doc.data();
@@ -82,8 +83,8 @@
         carList.innerHTML += html;
       });
     }).catch(error => {
+      console.error("Erreur:", error);
       carList.innerHTML = "<p>❌ Erreur lors du chargement des voitures.</p>";
-      console.error(error);
     });
   </script>
 
