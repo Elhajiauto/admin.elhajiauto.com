@@ -2,30 +2,38 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>ElHaji Auto - Nos Voitures</title>
+  <title>ElHaji Auto - Voitures</title>
+
+  <!-- Firebase CDN -->
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"></script>
+
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      padding: 30px;
+    }
+    h1 {
+      text-align: center;
+    }
     .car-card {
-      background: white;
+      background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 10px;
       padding: 15px;
-      margin-bottom: 20px;
-      max-width: 500px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     .car-card img {
-      max-width: 100%;
+      width: 100%;
       border-radius: 8px;
+      margin-bottom: 10px;
     }
     .car-card h2 {
-      margin: 10px 0 5px;
-      color: #333;
-    }
-    .car-card p {
-      margin: 5px 0;
+      margin-top: 0;
     }
   </style>
 </head>
@@ -35,7 +43,7 @@
   <div id="carList"></div>
 
   <script>
-    // 🔌 CONFIG FIREBASE - ديالك
+    // 🔧 Firebase Config (ديالك)
     const firebaseConfig = {
       apiKey: "AIzaSyC0YUGE6hRG9sck7rXcqjaB3he1nRGgbbU",
       authDomain: "elhaji-auto.firebaseapp.com",
@@ -45,25 +53,25 @@
       appId: "1:596529784342:web:dfa01b1e33287ce36db737"
     };
 
-    // 🔧 Initialisation
-    const app = firebase.initializeApp(firebaseConfig);
+    // ✅ Initialisation
+    firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
     const carList = document.getElementById("carList");
 
-    // 📦 Affichage des voitures
+    // 🔁 Get all cars from "voitures"
     db.collection("voitures").get().then(snapshot => {
       snapshot.forEach(doc => {
         const car = doc.data();
-        const image = car.images && car.images.length > 0 ? car.images[0] : '';
+        const image = car.images && car.images.length > 0 ? car.images[0] : "";
 
-        carList.innerHTML += `
+        const html = `
           <div class="car-card">
-            ${image ? `<img src="${image}" alt="${car.nom}">` : ''}
+            ${image ? `<img src="${image}" alt="${car.nom}">` : ""}
             <h2>${car.nom}</h2>
             <p><strong>Prix:</strong> ${car.prix} MAD</p>
             <p><strong>Année:</strong> ${car.annee}</p>
-            <p><strong>Kilométrage:</strong> ${car.kilometrage} km</p>
+            <p><strong>Kilométrage:</strong> ${car.kilometrage}</p>
             <p><strong>Carburant:</strong> ${car.carburant}</p>
             <p><strong>Transmission:</strong> ${car.transmission}</p>
             <p><strong>Puissance:</strong> ${car.puissance}</p>
@@ -71,10 +79,11 @@
             <p>${car.description}</p>
           </div>
         `;
+        carList.innerHTML += html;
       });
     }).catch(error => {
       carList.innerHTML = "<p>❌ Erreur lors du chargement des voitures.</p>";
-      console.error("Erreur:", error);
+      console.error(error);
     });
   </script>
 
