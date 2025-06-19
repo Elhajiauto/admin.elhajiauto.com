@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ElHaji Auto - Administration</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - ElHaji Auto</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -20,43 +20,45 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--light);
-      color: var(--dark);
-      line-height: 1.6;
-      overflow-x: hidden;
+      background: linear-gradient(135deg, #1a202c, #2d3748);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: var(--light);
     }
     
-    /* Header amélioré avec logo */
-    header {
-      background-color: var(--primary);
-      color: white;
-      padding: 15px 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+    .admin-container {
+      width: 100%;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
     
-    .header-container {
+    .admin-header {
+      background: var(--primary);
+      padding: 25px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    .logo {
+    .admin-logo {
       display: flex;
       align-items: center;
       gap: 15px;
     }
     
-    .logo-icon {
+    .admin-logo-icon {
       background: var(--secondary);
       width: 50px;
       height: 50px;
@@ -67,196 +69,110 @@
       font-size: 1.8rem;
     }
     
-    .logo-text h1 {
+    .admin-logo-text h1 {
       font-size: 1.8rem;
       font-weight: 700;
     }
     
-    .logo-text p {
+    .admin-logo-text p {
       font-size: 0.9rem;
       color: #cbd5e0;
     }
     
-    /* Navigation admin */
-    .admin-nav {
-      background: var(--dark);
-      padding: 15px 0;
+    .logout-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
-    .admin-nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
+    .logout-btn:hover {
+      background: #c53030;
+      transform: translateY(-3px);
+    }
+    
+    .admin-main {
       display: flex;
-      gap: 20px;
+      min-height: 600px;
+    }
+    
+    .admin-sidebar {
+      width: 280px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 30px 0;
+    }
+    
+    .admin-nav {
+      list-style: none;
+    }
+    
+    .admin-nav li {
+      margin-bottom: 5px;
     }
     
     .admin-nav a {
+      display: flex;
+      align-items: center;
+      padding: 15px 30px;
       color: #cbd5e0;
       text-decoration: none;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 6px;
       transition: all 0.3s ease;
+      font-weight: 500;
+      gap: 12px;
     }
     
-    .admin-nav a:hover, 
+    .admin-nav a:hover,
     .admin-nav a.active {
+      background: rgba(49, 130, 206, 0.2);
       color: white;
-      background: rgba(255,255,255,0.1);
     }
     
     .admin-nav a i {
-      margin-right: 8px;
+      width: 24px;
+      text-align: center;
     }
     
-    /* Main content */
-    .admin-main {
-      max-width: 1200px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
-    
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-    
-    .admin-header h2 {
-      font-size: 2rem;
-      color: var(--primary);
-    }
-    
-    .btn {
-      padding: 12px 24px;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .btn-primary {
-      background-color: var(--secondary);
-      color: white;
-    }
-    
-    .btn-primary:hover {
-      background-color: #2b6cb0;
-    }
-    
-    .btn-danger {
-      background-color: var(--accent);
-      color: white;
-    }
-    
-    .btn-danger:hover {
-      background-color: #c53030;
-    }
-    
-    /* Tableau des voitures */
-    .cars-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    }
-    
-    .cars-table th, 
-    .cars-table td {
-      padding: 15px;
-      text-align: left;
-      border-bottom: 1px solid #edf2f7;
-    }
-    
-    .cars-table th {
-      background: var(--primary);
-      color: white;
-      font-weight: 600;
-    }
-    
-    .cars-table tr:hover {
-      background: #f8fafc;
-    }
-    
-    .car-image-small {
-      width: 80px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-    
-    .action-btns {
-      display: flex;
-      gap: 8px;
-    }
-    
-    .action-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: none;
-      color: white;
-    }
-    
-    .edit-btn {
-      background: var(--secondary);
-    }
-    
-    .edit-btn:hover {
-      background: #2b6cb0;
-    }
-    
-    .delete-btn {
-      background: var(--accent);
-    }
-    
-    .delete-btn:hover {
-      background: #c53030;
-    }
-    
-    /* Formulaire d'ajout/modification */
-    .form-container {
-      background: white;
-      border-radius: 10px;
+    .admin-content {
+      flex: 1;
       padding: 30px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.03);
     }
     
-    .form-header {
+    .section-title {
+      font-size: 1.8rem;
       margin-bottom: 25px;
       padding-bottom: 15px;
-      border-bottom: 1px solid #edf2f7;
+      border-bottom: 2px solid var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     
-    .form-header h3 {
-      font-size: 1.5rem;
-      color: var(--primary);
+    /* Formulaire d'ajout */
+    .car-form {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
     
     .form-row {
       display: flex;
       flex-wrap: wrap;
-      margin: 0 -15px 20px;
+      margin: 0 -15px;
     }
     
     .form-group {
       flex: 1 0 calc(50% - 30px);
-      margin: 0 15px;
+      margin: 0 15px 25px;
     }
     
     .form-group.full-width {
@@ -267,18 +183,20 @@
       display: block;
       margin-bottom: 8px;
       font-weight: 600;
-      color: var(--primary);
+      color: #cbd5e0;
     }
     
     .form-group input,
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
+      padding: 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
       font-size: 1rem;
-      transition: border 0.3s ease;
+      transition: all 0.3s ease;
+      color: white;
     }
     
     .form-group input:focus,
@@ -286,6 +204,7 @@
     .form-group select:focus {
       outline: none;
       border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.3);
     }
     
     .form-group textarea {
@@ -293,436 +212,909 @@
       resize: vertical;
     }
     
-    .form-actions {
+    .image-preview {
       display: flex;
-      justify-content: flex-end;
+      flex-wrap: wrap;
       gap: 15px;
-      margin-top: 30px;
+      margin-top: 15px;
     }
     
-    /* Notifications */
-    .notification {
-      padding: 15px;
-      margin-bottom: 25px;
-      border-radius: 6px;
+    .preview-item {
+      position: relative;
+      width: 100px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .remove-image {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: var(--accent);
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    
+    .form-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .submit-btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 10px;
     }
     
-    .success-notification {
+    .submit-btn:hover {
+      background: #2b6cb0;
+      transform: translateY(-3px);
+    }
+    
+    .reset-btn {
+      background: transparent;
+      color: var(--gray);
+      border: 1px solid var(--gray);
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .reset-btn:hover {
+      color: white;
+      border-color: white;
+    }
+    
+    /* Liste des voitures */
+    .cars-list {
+      margin-top: 30px;
+    }
+    
+    .cars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    
+    .car-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .car-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .car-image {
+      height: 180px;
+      overflow: hidden;
+    }
+    
+    .car-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .car-content {
+      padding: 20px;
+    }
+    
+    .car-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    
+    .car-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    
+    .car-price {
+      color: var(--secondary);
+      font-weight: 700;
+    }
+    
+    .car-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr));
+      gap: 10px;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      color: #a0aec0;
+    }
+    
+    .car-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .action-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    
+    .edit-btn {
+      background: rgba(49, 130, 206, 0.2);
+      color: var(--secondary);
+    }
+    
+    .edit-btn:hover {
+      background: var(--secondary);
+      color: white;
+    }
+    
+    .delete-btn {
+      background: rgba(229, 62, 62, 0.2);
+      color: var(--accent);
+    }
+    
+    .delete-btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+    
+    /* Login page */
+    .login-container {
+      max-width: 450px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .login-header {
+      background: var(--primary);
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .login-logo-icon {
+      background: var(--secondary);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    
+    .login-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .login-form {
+      padding: 40px 30px;
+    }
+    
+    .form-group-login {
+      margin-bottom: 25px;
+    }
+    
+    .form-group-login label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .form-group-login input {
+      width: 100%;
+      padding: 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      font-size: 1rem;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group-login input:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.3);
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .login-btn:hover {
+      background: #2b6cb0;
+      transform: translateY(-3px);
+    }
+    
+    .notification {
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+      text-align: center;
+      display: none;
+    }
+    
+    .success {
       background: rgba(72, 187, 120, 0.15);
       border: 1px solid var(--success);
       color: var(--success);
     }
     
-    .error-notification {
+    .error {
       background: rgba(229, 62, 62, 0.15);
       border: 1px solid var(--accent);
       color: var(--accent);
     }
     
     /* Responsive */
-    @media (max-width: 768px) {
-      .admin-nav-container {
+    @media (max-width: 992px) {
+      .admin-main {
         flex-direction: column;
-        gap: 10px;
       }
       
+      .admin-sidebar {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 768px) {
       .form-group {
         flex: 1 0 calc(100% - 30px);
       }
       
-      .action-btns {
+      .form-actions {
         flex-direction: column;
+      }
+      
+      .submit-btn, .reset-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .admin-header {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .logout-btn {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
-
-<header>
-  <div class="header-container">
-    <div class="logo">
-      <div class="logo-icon">
-        <i class="fas fa-car"></i>
+  <!-- Page de connexion -->
+  <div id="loginPage" class="login-container">
+    <div class="login-header">
+      <div class="login-logo">
+        <div class="login-logo-icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <h2>Espace Admin</h2>
       </div>
-      <div class="logo-text">
-        <h1>ElHaji Auto</h1>
-        <p>Espace Administrateur</p>
-      </div>
-    </div>
-    <div class="contact-header">
-      <p><i class="fas fa-user-shield"></i> Administrateur</p>
-    </div>
-  </div>
-</header>
-
-<nav class="admin-nav">
-  <div class="admin-nav-container">
-    <a href="#" class="active"><i class="fas fa-car"></i> Voitures</a>
-    <a href="#"><i class="fas fa-users"></i> Clients</a>
-    <a href="#"><i class="fas fa-calendar-check"></i> Rendez-vous</a>
-    <a href="#"><i class="fas fa-cog"></i> Paramètres</a>
-    <a href="index.html" style="margin-left: auto;"><i class="fas fa-sign-out-alt"></i> Retour au site</a>
-  </div>
-</nav>
-
-<main class="admin-main">
-  <div class="admin-header">
-    <h2>Gestion des véhicules</h2>
-    <button class="btn btn-primary" id="addCarBtn">
-      <i class="fas fa-plus"></i> Ajouter un véhicule
-    </button>
-  </div>
-
-  <div id="notification" class="notification" style="display: none;"></div>
-
-  <table class="cars-table">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Modèle</th>
-        <th>Année</th>
-        <th>Kilométrage</th>
-        <th>Prix</th>
-        <th>Statut</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="carsTableBody">
-      <!-- Les voitures seront chargées ici par JavaScript -->
-    </tbody>
-  </table>
-
-  <!-- Formulaire d'ajout/modification (caché par défaut) -->
-  <div class="form-container" id="carFormContainer" style="display: none;">
-    <div class="form-header">
-      <h3 id="formTitle">Ajouter un nouveau véhicule</h3>
+      <p class="login-title">Connexion à l'administration</p>
     </div>
     
-    <form id="carForm">
-      <input type="hidden" id="carId">
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label for="carName">Modèle *</label>
-          <input type="text" id="carName" required placeholder="Ex: Volkswagen Golf 7 GTI">
-        </div>
-        
-        <div class="form-group">
-          <label for="carYear">Année *</label>
-          <input type="number" id="carYear" min="1980" max="2025" required placeholder="Ex: 2018">
-        </div>
+    <div class="login-form">
+      <div class="notification error" id="loginError">
+        <i class="fas fa-exclamation-circle"></i> Identifiants incorrects. Veuillez réessayer.
       </div>
       
-      <div class="form-row">
-        <div class="form-group">
-          <label for="carMileage">Kilométrage (km) *</label>
-          <input type="text" id="carMileage" required placeholder="Ex: 75 000 km">
-        </div>
-        
-        <div class="form-group">
-          <label for="carPrice">Prix *</label>
-          <input type="text" id="carPrice" required placeholder="Ex: 150 000 DH">
-        </div>
+      <div class="form-group-login">
+        <label for="username">Nom d'utilisateur</label>
+        <input type="text" id="username" placeholder="Entrez votre nom d'utilisateur" required>
       </div>
       
-      <div class="form-row">
-        <div class="form-group">
-          <label for="carFuel">Carburant *</label>
-          <select id="carFuel" required>
-            <option value="">Sélectionnez</option>
-            <option value="essence">Essence</option>
-            <option value="diesel">Diesel</option>
-            <option value="hybride">Hybride</option>
-            <option value="electrique">Électrique</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label for="carTransmission">Transmission *</label>
-          <select id="carTransmission" required>
-            <option value="">Sélectionnez</option>
-            <option value="manuelle">Manuelle</option>
-            <option value="automatique">Automatique</option>
-          </select>
-        </div>
+      <div class="form-group-login">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" placeholder="Entrez votre mot de passe" required>
       </div>
       
-      <div class="form-row">
-        <div class="form-group">
-          <label for="carPower">Puissance *</label>
-          <input type="text" id="carPower" required placeholder="Ex: 220 ch">
-        </div>
-        
-        <div class="form-group">
-          <label for="carColor">Couleur *</label>
-          <input type="text" id="carColor" required placeholder="Ex: Gris métallisé">
-        </div>
-      </div>
-      
-      <div class="form-row">
-        <div class="form-group full-width">
-          <label for="carImages">Images (URLs séparées par des virgules) *</label>
-          <textarea id="carImages" required placeholder="https://image1.jpg, https://image2.jpg"></textarea>
-        </div>
-      </div>
-      
-      <div class="form-row">
-        <div class="form-group full-width">
-          <label for="carDescription">Description *</label>
-          <textarea id="carDescription" required></textarea>
-        </div>
-      </div>
-      
-      <div class="form-actions">
-        <button type="button" class="btn" id="cancelBtn">Annuler</button>
-        <button type="submit" class="btn btn-primary" id="saveBtn">Enregistrer</button>
-      </div>
-    </form>
+      <button class="login-btn" id="loginBtn">
+        <i class="fas fa-sign-in-alt"></i> Se connecter
+      </button>
+    </div>
   </div>
-</main>
-
-<script>
-  // Récupérer les voitures depuis le localStorage ou utiliser les données par défaut
-  let cars = JSON.parse(localStorage.getItem('cars')) || [
-    {
-      id: 1,
-      name: "Volkswagen Golf 5 GT",
-      year: 2006,
-      mileage: "221 000 km",
-      price: "100 000 DH",
-      fuel: "Diesel",
-      transmission: "Manuel",
-      power: "140 ch",
-      color: "Gris métallisé",
-      images: [
-        "https://i.imgur.com/voQaWQL.png",
-        "https://i.imgur.com/damId9b.png",
-        "https://i.imgur.com/auIaN7Z.png",
-        "https://i.imgur.com/iCwuNZN.png"
-      ],
-      description: "La Volkswagen Golf 5 GT est une voiture compacte sportive offrant un équilibre parfait entre performances et confort quotidien. Avec son moteur 2.0L TDI de 140 chevaux, elle assure une conduite dynamique tout en restant économique."
-    },
-    {
-      id: 2,
-      name: "Seat Leon 2009",
-      year: 2009,
-      mileage: "320 000 km",
-      price: "75 000 DH",
-      fuel: "Diesel",
-      transmission: "Manuel",
-      power: "140 ch",
-      color: "Gris métallisé",
-      images: [
-        "https://i.imgur.com/qCKObXz.png",
-        "https://i.imgur.com/LFiCULN.png",
-        "https://i.imgur.com/18cdGe1.png",
-        "https://i.imgur.com/CpRBCli.png",
-        "https://i.imgur.com/H5R9PoN.png",
-        "https://i.imgur.com/hdyr8m0.png"
-      ],
-      description: "La Seat Leon est une voiture compacte sportive basée sur la plateforme de la Golf, offrant un look plus agressif et des performances similaires à un prix plus attractif."
-    },
-    {
-      id: 3,
-      name: "Mazda 2 2009",
-      year: 2009,
-      mileage: "170 000 km",
-      price: "50 000 DH",
-      fuel: "Essence",
-      transmission: "Manuel",
-      power: "100 ch",
-      color: "Blue",
-      images: [
-        "https://i.imgur.com/mAeUgT5.png",
-        "https://i.imgur.com/YQlN0GI.png",
-        "https://i.imgur.com/PRYJY2i.png",
-        "https://i.imgur.com/4b43W9d.png"
-      ],
-      description: "La Mazda 2 est une citadine économique et fiable, avec un design dynamique et une conduite agréable. Parfaite pour la ville tout en étant capable sur route."
-    },
-    {
-      id: 4,
-      name: "Nissan Pathfinder 2008",
-      year: 2008,
-      mileage: "330 000 km",
-      price: "80 000 DH",
-      fuel: "Diesel",
-      transmission: "Manuel",
-      power: "140 ch",
-      color: "Gris métallisé",
-      images: [
-        "https://i.imgur.com/jgnaTks.png",
-        "https://i.imgur.com/q97Bq1y.png",
-        "https://i.imgur.com/7RgIHoM.png",
-        "https://i.imgur.com/A6wCpUq.png"
-      ],
-      description: "Le Nissan Pathfinder est un SUV spacieux et robuste, idéal pour les familles nombreuses ou les amateurs de grand espace et de confort."
-    }
-  ];
-
-  // Sauvegarder les voitures dans le localStorage
-  function saveCars() {
-    localStorage.setItem('cars', JSON.stringify(cars));
-  }
-
-  // Afficher les voitures dans le tableau
-  function renderCars() {
-    const tbody = document.getElementById('carsTableBody');
-    tbody.innerHTML = '';
+  
+  <!-- Page d'administration (cachée par défaut) -->
+  <div id="adminPage" class="admin-container" style="display: none;">
+    <header class="admin-header">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">
+          <i class="fas fa-car"></i>
+        </div>
+        <div class="admin-logo-text">
+          <h1>ElHaji Auto</h1>
+          <p>Administration</p>
+        </div>
+      </div>
+      <button class="logout-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Déconnexion
+      </button>
+    </header>
     
-    cars.forEach(car => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><img src="${car.images[0]}" alt="${car.name}" class="car-image-small"></td>
-        <td>${car.name}</td>
-        <td>${car.year}</td>
-        <td>${car.mileage}</td>
-        <td>${car.price}</td>
-        <td>${car.id <= 2 ? '<span style="color: var(--success);">En stock</span>' : '<span style="color: var(--accent);">Vendu</span>'}</td>
-        <td>
-          <div class="action-btns">
-            <button class="action-btn edit-btn" data-id="${car.id}">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="action-btn delete-btn" data-id="${car.id}">
-              <i class="fas fa-trash"></i>
-            </button>
+    <div class="admin-main">
+      <aside class="admin-sidebar">
+        <ul class="admin-nav">
+          <li><a href="#" class="active" data-section="gestion"><i class="fas fa-car"></i> Gestion des Voitures</a></li>
+          <li><a href="#" data-section="ajout"><i class="fas fa-plus-circle"></i> Ajouter une Voiture</a></li>
+          <li><a href="#" data-section="parametres"><i class="fas fa-cog"></i> Paramètres</a></li>
+        </ul>
+      </aside>
+      
+      <main class="admin-content">
+        <!-- Section de gestion des voitures -->
+        <section id="gestionSection">
+          <h2 class="section-title"><i class="fas fa-list"></i> Liste des Voitures</h2>
+          
+          <div class="notification success" id="successNotification">
+            <i class="fas fa-check-circle"></i> Opération effectuée avec succès !
           </div>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-    
-    // Ajouter les événements aux boutons
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-      btn.addEventListener('click', () => editCar(parseInt(btn.getAttribute('data-id'))));
-    });
-    
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.addEventListener('click', () => deleteCar(parseInt(btn.getAttribute('data-id'))));
-    });
-  }
+          
+          <div class="cars-list">
+            <div class="cars-grid" id="carsGrid">
+              <!-- Les cartes de voitures seront injectées ici par JavaScript -->
+            </div>
+          </div>
+        </section>
+        
+        <!-- Section d'ajout de voiture -->
+        <section id="ajoutSection" style="display: none;">
+          <h2 class="section-title"><i class="fas fa-plus-circle"></i> Ajouter une Voiture</h2>
+          
+          <div class="notification error" id="formError">
+            <i class="fas fa-exclamation-circle"></i> Veuillez remplir tous les champs obligatoires.
+          </div>
+          
+          <form class="car-form" id="carForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="carName">Nom du modèle *</label>
+                <input type="text" id="carName" placeholder="Ex: Volkswagen Golf 7 GTI" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="carPrice">Prix *</label>
+                <input type="text" id="carPrice" placeholder="Ex: 100 000 DH" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="carYear">Année *</label>
+                <input type="number" id="carYear" min="1980" max="2025" placeholder="Ex: 2018" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="carMileage">Kilométrage *</label>
+                <input type="text" id="carMileage" placeholder="Ex: 75 000 km" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="carFuel">Carburant *</label>
+                <select id="carFuel" required>
+                  <option value="">Sélectionnez</option>
+                  <option value="essence">Essence</option>
+                  <option value="diesel">Diesel</option>
+                  <option value="hybride">Hybride</option>
+                  <option value="electrique">Électrique</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="carTransmission">Transmission *</label>
+                <select id="carTransmission" required>
+                  <option value="">Sélectionnez</option>
+                  <option value="manuelle">Manuelle</option>
+                  <option value="automatique">Automatique</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="carPower">Puissance *</label>
+                <input type="text" id="carPower" placeholder="Ex: 140 ch" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="carColor">Couleur *</label>
+                <input type="text" id="carColor" placeholder="Ex: Gris métallisé" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="carDescription">Description *</label>
+                <textarea id="carDescription" placeholder="Décrivez la voiture en détail..." required></textarea>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="carImages">Images (URLs séparées par des virgules) *</label>
+                <textarea id="carImages" placeholder="https://image1.jpg, https://image2.jpg" required></textarea>
+                <small>Entrez les URLs des images séparées par des virgules</small>
+                
+                <div class="image-preview" id="imagePreview">
+                  <!-- Prévisualisation des images -->
+                </div>
+              </div>
+            </div>
+            
+            <input type="hidden" id="carId">
+            
+            <div class="form-actions">
+              <button type="submit" class="submit-btn" id="saveCarBtn">
+                <i class="fas fa-save"></i> Enregistrer
+              </button>
+              <button type="reset" class="reset-btn" id="resetBtn">
+                <i class="fas fa-times"></i> Annuler
+              </button>
+            </div>
+          </form>
+        </section>
+        
+        <!-- Section des paramètres -->
+        <section id="parametresSection" style="display: none;">
+          <h2 class="section-title"><i class="fas fa-cog"></i> Paramètres de l'Admin</h2>
+          
+          <div class="car-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nom d'utilisateur actuel</label>
+                <input type="text" value="admin" disabled>
+              </div>
+              
+              <div class="form-group">
+                <label for="newPassword">Nouveau mot de passe</label>
+                <input type="password" id="newPassword" placeholder="Entrez un nouveau mot de passe">
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+                <input type="password" id="confirmPassword" placeholder="Confirmez le nouveau mot de passe">
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="submit-btn" id="updatePasswordBtn">
+                <i class="fas fa-key"></i> Mettre à jour le mot de passe
+              </button>
+            </div>
+          </div>
+          
+          <div class="car-form" style="margin-top: 40px;">
+            <h3 style="color: #cbd5e0; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-database"></i> Gestion des Données
+            </h3>
+            
+            <div class="form-actions">
+              <button type="button" class="submit-btn" id="exportDataBtn" style="background: var(--success);">
+                <i class="fas fa-file-export"></i> Exporter les données
+              </button>
+              <button type="button" class="reset-btn" id="importDataBtn">
+                <i class="fas fa-file-import"></i> Importer des données
+              </button>
+              <button type="button" class="reset-btn" id="resetDataBtn" style="color: var(--accent); border-color: var(--accent);">
+                <i class="fas fa-trash-alt"></i> Réinitialiser les données
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
 
-  // Afficher le formulaire
-  function showForm() {
-    document.getElementById('carFormContainer').style.display = 'block';
-    document.getElementById('carsTableBody').style.opacity = '0.5';
-    document.getElementById('addCarBtn').style.display = 'none';
-    window.scrollTo({ top: document.getElementById('carFormContainer').offsetTop, behavior: 'smooth' });
-  }
-
-  // Cacher le formulaire
-  function hideForm() {
-    document.getElementById('carFormContainer').style.display = 'none';
-    document.getElementById('carsTableBody').style.opacity = '1';
-    document.getElementById('addCarBtn').style.display = 'flex';
-    document.getElementById('carForm').reset();
-    document.getElementById('carId').value = '';
-    document.getElementById('formTitle').textContent = 'Ajouter un nouveau véhicule';
-  }
-
-  // Ajouter une nouvelle voiture
-  function addCar() {
-    document.getElementById('formTitle').textContent = 'Ajouter un nouveau véhicule';
-    showForm();
-  }
-
-  // Éditer une voiture existante
-  function editCar(id) {
-    const car = cars.find(c => c.id === id);
-    if (!car) return;
+  <script>
+    // Identification
+    const loginPage = document.getElementById('loginPage');
+    const adminPage = document.getElementById('adminPage');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginError = document.getElementById('loginError');
     
-    document.getElementById('formTitle').textContent = 'Modifier le véhicule';
-    document.getElementById('carId').value = car.id;
-    document.getElementById('carName').value = car.name;
-    document.getElementById('carYear').value = car.year;
-    document.getElementById('carMileage').value = car.mileage;
-    document.getElementById('carPrice').value = car.price;
-    document.getElementById('carFuel').value = car.fuel.toLowerCase();
-    document.getElementById('carTransmission').value = car.transmission.toLowerCase();
-    document.getElementById('carPower').value = car.power;
-    document.getElementById('carColor').value = car.color;
-    document.getElementById('carImages').value = car.images.join(', ');
-    document.getElementById('carDescription').value = car.description;
+    // Navigation
+    const navLinks = document.querySelectorAll('.admin-nav a');
+    const gestionSection = document.getElementById('gestionSection');
+    const ajoutSection = document.getElementById('ajoutSection');
+    const parametresSection = document.getElementById('parametresSection');
     
-    showForm();
-  }
-
-  // Supprimer une voiture
-  function deleteCar(id) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ? Cette action est irréversible.')) {
-      cars = cars.filter(c => c.id !== id);
-      saveCars();
-      renderCars();
-      showNotification('Véhicule supprimé avec succès', 'success');
-    }
-  }
-
-  // Sauvegarder le formulaire (ajout ou modification)
-  function saveCar(e) {
-    e.preventDefault();
+    // Formulaire
+    const carForm = document.getElementById('carForm');
+    const saveCarBtn = document.getElementById('saveCarBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const formError = document.getElementById('formError');
+    const successNotification = document.getElementById('successNotification');
+    const imagePreview = document.getElementById('imagePreview');
+    const carImagesInput = document.getElementById('carImages');
     
-    const id = document.getElementById('carId').value;
-    const carData = {
-      name: document.getElementById('carName').value,
-      year: parseInt(document.getElementById('carYear').value),
-      mileage: document.getElementById('carMileage').value,
-      price: document.getElementById('carPrice').value,
-      fuel: document.getElementById('carFuel').value,
-      transmission: document.getElementById('carTransmission').value,
-      power: document.getElementById('carPower').value,
-      color: document.getElementById('carColor').value,
-      images: document.getElementById('carImages').value.split(',').map(url => url.trim()),
-      description: document.getElementById('carDescription').value
-    };
+    // Liste des voitures
+    const carsGrid = document.getElementById('carsGrid');
     
-    if (id) {
-      // Modification
-      const index = cars.findIndex(c => c.id === parseInt(id));
-      if (index !== -1) {
-        cars[index] = { ...cars[index], ...carData };
-        saveCars();
-        renderCars();
-        hideForm();
-        showNotification('Véhicule modifié avec succès', 'success');
+    // Authentification
+    const USERNAME = 'admin';
+    const PASSWORD = 'elhajiauto123';
+    
+    // Gestion de la connexion
+    loginBtn.addEventListener('click', () => {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if(username === USERNAME && password === PASSWORD) {
+        loginPage.style.display = 'none';
+        adminPage.style.display = 'block';
+        
+        // Charger les voitures
+        loadCars();
+      } else {
+        loginError.style.display = 'block';
       }
-    } else {
-      // Ajout
-      const newId = cars.length > 0 ? Math.max(...cars.map(c => c.id)) + 1 : 1;
-      cars.push({ id: newId, ...carData });
-      saveCars();
-      renderCars();
-      hideForm();
-      showNotification('Véhicule ajouté avec succès', 'success');
-    }
-  }
-
-  // Afficher une notification
-  function showNotification(message, type) {
-    const notification = document.getElementById('notification');
-    notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
-    notification.className = `notification ${type}-notification`;
-    notification.style.display = 'flex';
+    });
     
-    setTimeout(() => {
-      notification.style.display = 'none';
-    }, 5000);
-  }
-
-  // Événements
-  document.getElementById('addCarBtn').addEventListener('click', addCar);
-  document.getElementById('cancelBtn').addEventListener('click', hideForm);
-  document.getElementById('carForm').addEventListener('submit', saveCar);
-
-  // Initialisation
-  document.addEventListener('DOMContentLoaded', () => {
-    saveCars(); // Sauvegarder les données par défaut si c'est la première fois
-    renderCars();
-  });
-</script>
-
+    // Déconnexion
+    logoutBtn.addEventListener('click', () => {
+      adminPage.style.display = 'none';
+      loginPage.style.display = 'block';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    });
+    
+    // Navigation admin
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const section = this.getAttribute('data-section');
+        
+        // Mettre à jour la navigation
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Afficher la bonne section
+        gestionSection.style.display = 'none';
+        ajoutSection.style.display = 'none';
+        parametresSection.style.display = 'none';
+        
+        if(section === 'gestion') {
+          gestionSection.style.display = 'block';
+          loadCars();
+        } else if(section === 'ajout') {
+          ajoutSection.style.display = 'block';
+          resetForm();
+        } else if(section === 'parametres') {
+          parametresSection.style.display = 'block';
+        }
+      });
+    });
+    
+    // Prévisualisation des images
+    carImagesInput.addEventListener('input', function() {
+      const urls = this.value.split(',').map(url => url.trim()).filter(url => url);
+      imagePreview.innerHTML = '';
+      
+      urls.forEach(url => {
+        if(url) {
+          const previewItem = document.createElement('div');
+          previewItem.className = 'preview-item';
+          previewItem.innerHTML = `
+            <img src="${url}" alt="Preview">
+            <div class="remove-image" data-url="${url}">&times;</div>
+          `;
+          imagePreview.appendChild(previewItem);
+        }
+      });
+      
+      // Gestion de la suppression d'image dans la prévisualisation
+      document.querySelectorAll('.remove-image').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const urlToRemove = this.getAttribute('data-url');
+          const urls = carImagesInput.value.split(',').map(url => url.trim()).filter(url => url && url !== urlToRemove);
+          carImagesInput.value = urls.join(', ');
+          this.parentElement.remove();
+        });
+      });
+    });
+    
+    // Sauvegarder une voiture
+    carForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validation
+      if(!validateForm()) {
+        formError.style.display = 'block';
+        return;
+      }
+      
+      formError.style.display = 'none';
+      
+      const carId = document.getElementById('carId').value;
+      const carData = {
+        id: carId || Date.now(), // Utiliser un nouvel ID si création
+        name: document.getElementById('carName').value,
+        year: document.getElementById('carYear').value,
+        mileage: document.getElementById('carMileage').value,
+        price: document.getElementById('carPrice').value,
+        fuel: document.getElementById('carFuel').value,
+        transmission: document.getElementById('carTransmission').value,
+        power: document.getElementById('carPower').value,
+        color: document.getElementById('carColor').value,
+        description: document.getElementById('carDescription').value,
+        images: document.getElementById('carImages').value.split(',').map(url => url.trim()).filter(url => url)
+      };
+      
+      // Sauvegarder dans le localStorage
+      saveCar(carData);
+      
+      // Afficher la notification de succès
+      successNotification.style.display = 'block';
+      successNotification.innerHTML = `
+        <i class="fas fa-check-circle"></i> 
+        Voiture ${carId ? 'modifiée' : 'ajoutée'} avec succès !
+      `;
+      
+      // Cacher la notification après 3 secondes
+      setTimeout(() => {
+        successNotification.style.display = 'none';
+      }, 3000);
+      
+      // Revenir à la liste et recharger
+      gestionSection.style.display = 'block';
+      ajoutSection.style.display = 'none';
+      navLinks[0].classList.add('active');
+      navLinks[1].classList.remove('active');
+      
+      loadCars();
+    });
+    
+    // Réinitialiser le formulaire
+    resetBtn.addEventListener('click', resetForm);
+    
+    // Validation du formulaire
+    function validateForm() {
+      const requiredFields = [
+        'carName', 'carPrice', 'carYear', 'carMileage', 
+        'carFuel', 'carTransmission', 'carPower', 
+        'carColor', 'carDescription', 'carImages'
+      ];
+      
+      for(const fieldId of requiredFields) {
+        const field = document.getElementById(fieldId);
+        if(!field.value.trim()) {
+          field.focus();
+          return false;
+        }
+      }
+      
+      return true;
+    }
+    
+    // Réinitialiser le formulaire
+    function resetForm() {
+      carForm.reset();
+      document.getElementById('carId').value = '';
+      imagePreview.innerHTML = '';
+      formError.style.display = 'none';
+      saveCarBtn.innerHTML = '<i class="fas fa-save"></i> Enregistrer';
+    }
+    
+    // Sauvegarder une voiture dans localStorage
+    function saveCar(carData) {
+      const cars = JSON.parse(localStorage.getItem('elhajiauto_cars') || '[]');
+      
+      if(carData.id) {
+        // Modification
+        const index = cars.findIndex(c => c.id == carData.id);
+        if(index !== -1) {
+          cars[index] = carData;
+        } else {
+          cars.push(carData);
+        }
+      } else {
+        // Nouvelle voiture
+        carData.id = Date.now();
+        cars.push(carData);
+      }
+      
+      localStorage.setItem('elhajiauto_cars', JSON.stringify(cars));
+    }
+    
+    // Charger les voitures depuis localStorage
+    function loadCars() {
+      const cars = JSON.parse(localStorage.getItem('elhajiauto_cars') || '[]');
+      carsGrid.innerHTML = '';
+      
+      if(cars.length === 0) {
+        carsGrid.innerHTML = `
+          <div class="no-cars" style="grid-column: 1/-1; text-align: center; padding: 40px; color: #a0aec0;">
+            <i class="fas fa-car" style="font-size: 3rem; margin-bottom: 20px;"></i>
+            <h3>Aucune voiture enregistrée</h3>
+            <p>Commencez par ajouter une voiture en utilisant le formulaire d'ajout.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      cars.forEach(car => {
+        const carCard = document.createElement('div');
+        carCard.className = 'car-card';
+        carCard.innerHTML = `
+          <div class="car-image">
+            <img src="${car.images[0] || 'https://via.placeholder.com/300x180?text=Image+Manquante'}" alt="${car.name}">
+          </div>
+          <div class="car-content">
+            <div class="car-header">
+              <h3 class="car-title">${car.name}</h3>
+              <div class="car-price">${car.price}</div>
+            </div>
+            <div class="car-details">
+              <div><i class="fas fa-calendar"></i> ${car.year}</div>
+              <div><i class="fas fa-tachometer-alt"></i> ${car.mileage}</div>
+              <div><i class="fas fa-gas-pump"></i> ${car.fuel}</div>
+              <div><i class="fas fa-cog"></i> ${car.transmission}</div>
+            </div>
+            <div class="car-actions">
+              <button class="action-btn edit-btn" data-id="${car.id}">
+                <i class="fas fa-edit"></i> Modifier
+              </button>
+              <button class="action-btn delete-btn" data-id="${car.id}">
+                <i class="fas fa-trash-alt"></i> Supprimer
+              </button>
+            </div>
+          </div>
+        `;
+        carsGrid.appendChild(carCard);
+      });
+      
+      // Ajouter les événements pour modifier et supprimer
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const carId = this.getAttribute('data-id');
+          editCar(carId);
+        });
+      });
+      
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const carId = this.getAttribute('data-id');
+          deleteCar(carId);
+        });
+      });
+    }
+    
+    // Modifier une voiture
+    function editCar(carId) {
+      const cars = JSON.parse(localStorage.getItem('elhajiauto_cars') || '[]');
+      const car = cars.find(c => c.id == carId);
+      
+      if(car) {
+        // Remplir le formulaire
+        document.getElementById('carId').value = car.id;
+        document.getElementById('carName').value = car.name;
+        document.getElementById('carYear').value = car.year;
+        document.getElementById('carMileage').value = car.mileage;
+        document.getElementById('carPrice').value = car.price;
+        document.getElementById('carFuel').value = car.fuel;
+        document.getElementById('carTransmission').value = car.transmission;
+        document.getElementById('carPower').value = car.power;
+        document.getElementById('carColor').value = car.color;
+        document.getElementById('carDescription').value = car.description;
+        document.getElementById('carImages').value = car.images.join(', ');
+        
+        // Mettre à jour la prévisualisation
+        const event = new Event('input', { bubbles: true });
+        document.getElementById('carImages').dispatchEvent(event);
+        
+        // Changer le texte du bouton
+        saveCarBtn.innerHTML = '<i class="fas fa-save"></i> Mettre à jour';
+        
+        // Naviguer vers le formulaire
+        ajoutSection.style.display = 'block';
+        gestionSection.style.display = 'none';
+        navLinks[1].classList.add('active');
+        navLinks[0].classList.remove('active');
+      }
+    }
+    
+    // Supprimer une voiture
+    function deleteCar(carId) {
+      if(confirm('Êtes-vous sûr de vouloir supprimer cette voiture ? Cette action est irréversible.')) {
+        const cars = JSON.parse(localStorage.getItem('elhajiauto_cars') || '[]');
+        const updatedCars = cars.filter(c => c.id != carId);
+        
+        localStorage.setItem('elhajiauto_cars', JSON.stringify(updatedCars));
+        loadCars();
+        
+        // Afficher la notification de succès
+        successNotification.style.display = 'block';
+        successNotification.innerHTML = `
+          <i class="fas fa-check-circle"></i> 
+          Voiture supprimée avec succès !
+        `;
+        
+        // Cacher la notification après 3 secondes
+        setTimeout(() => {
+          successNotification.style.display = 'none';
+        }, 3000);
+      }
+    }
+    
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', () => {
+      // Focus sur le champ username
+      document.getElementById('username').focus();
+    });
+  </script>
 </body>
 </html>
