@@ -7,17 +7,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary: #0d1421;
+      --primary: #0f172a;
       --secondary: #3b82f6;
       --accent: #ef4444;
-      --light: #f0f4f8;
+      --light: #f8fafc;
       --dark: #1e293b;
-      --card-bg: rgba(30, 41, 59, 0.85);
-      --sidebar-bg: rgba(13, 20, 33, 0.95);
-      --hover-bg: rgba(56, 189, 248, 0.15);
-      --depth-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      --element-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      --inset-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
+      --gray: #64748b;
+      --success: #10b981;
+      --info: #0ea5e9;
+      --warning: #f59e0b;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --sidebar-bg: rgba(15, 23, 42, 0.95);
+      --hover-bg: rgba(56, 189, 248, 0.1);
     }
     
     * {
@@ -28,7 +29,7 @@
     }
     
     body {
-      background: radial-gradient(ellipse at center, #0f172a 0%, #0a0f1a 100%);
+      background: radial-gradient(circle at top right, #0f172a 0%, #1e293b 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -36,8 +37,6 @@
       padding: 20px;
       color: var(--light);
       line-height: 1.6;
-      perspective: 1000px;
-      overflow-x: hidden;
     }
     
     .admin-container {
@@ -45,36 +44,25 @@
       max-width: 1400px;
       background: var(--card-bg);
       backdrop-filter: blur(12px);
-      border-radius: 20px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: var(--depth-shadow);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      transform-style: preserve-3d;
-      animation: float 8s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotateX(1deg); }
-      50% { transform: translateY(-10px) rotateX(1deg); }
     }
     
     .admin-header {
-      background: linear-gradient(135deg, var(--primary) 0%, #1a243a 100%);
+      background: var(--primary);
       padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: var(--element-shadow);
-      position: relative;
-      z-index: 10;
     }
     
     .admin-logo {
       display: flex;
       align-items: center;
       gap: 15px;
-      transform: translateZ(20px);
     }
     
     .admin-logo-icon {
@@ -86,28 +74,13 @@
       align-items: center;
       justify-content: center;
       font-size: 1.8rem;
-      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4),
-                  inset 0 -3px 0 rgba(0, 0, 0, 0.3),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .admin-logo-icon:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
     }
     
     .admin-logo-text h1 {
       font-size: 1.8rem;
       font-weight: 700;
       letter-spacing: -0.5px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
     
     .admin-logo-text p {
@@ -117,47 +90,29 @@
     }
     
     .logout-btn {
-      background: linear-gradient(to bottom, var(--accent), #c53030);
+      background: var(--accent);
       color: white;
       border: none;
       padding: 12px 25px;
-      border-radius: 12px;
+      border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3),
-                  inset 0 -3px 0 rgba(0, 0, 0, 0.3),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-      transform: translateZ(10px);
-    }
-    
-    .logout-btn:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
     }
     
     .logout-btn:hover {
-      background: linear-gradient(to bottom, #dc2626, #b91c1c);
-      transform: translateY(-4px) translateZ(10px);
-      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4),
-                  inset 0 -3px 0 rgba(0, 0, 0, 0.3),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.1);
+      background: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(239, 68, 68, 0.35);
     }
     
     .admin-main {
       display: flex;
       min-height: 700px;
-      transform-style: preserve-3d;
     }
     
     .admin-sidebar {
@@ -165,10 +120,6 @@
       background: var(--sidebar-bg);
       padding: 30px 0;
       border-right: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
-      position: relative;
-      z-index: 5;
-      transform: translateZ(10px);
     }
     
     .admin-nav {
@@ -177,7 +128,6 @@
     
     .admin-nav li {
       margin-bottom: 5px;
-      transform-style: preserve-3d;
     }
     
     .admin-nav a {
@@ -191,7 +141,6 @@
       gap: 15px;
       position: relative;
       font-size: 0.95rem;
-      transform: translateZ(5px);
     }
     
     .admin-nav a:before {
@@ -205,15 +154,12 @@
       border-radius: 0 4px 4px 0;
       transform: scaleY(0);
       transition: transform 0.3s ease;
-      transform-origin: center top;
     }
     
     .admin-nav a:hover,
     .admin-nav a.active {
       background: var(--hover-bg);
       color: white;
-      transform: translateX(5px) translateZ(5px);
-      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
     }
     
     .admin-nav a:hover:before,
@@ -233,7 +179,6 @@
       background: rgba(255, 255, 255, 0.03);
       overflow-y: auto;
       max-height: calc(100vh - 120px);
-      transform: translateZ(0);
     }
     
     .section-title {
@@ -245,21 +190,16 @@
       align-items: center;
       gap: 12px;
       font-weight: 700;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      transform: translateZ(15px);
     }
     
     /* Formulaire d'ajout */
     .car-form {
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.5), rgba(13, 20, 33, 0.5));
-      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 16px;
       padding: 30px;
       margin-bottom: 40px;
-      box-shadow: var(--element-shadow),
-                  var(--inset-shadow);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      position: relative;
-      transform: translateZ(10px);
     }
     
     .form-row {
@@ -271,7 +211,6 @@
     .form-group {
       flex: 1 0 calc(50% - 30px);
       margin: 0 15px 25px;
-      transform: translateZ(5px);
     }
     
     .form-group.full-width {
@@ -284,7 +223,6 @@
       font-weight: 600;
       color: #94a3b8;
       font-size: 0.9rem;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
     
     .form-group input,
@@ -292,14 +230,12 @@
     .form-group select {
       width: 100%;
       padding: 14px;
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 1rem;
       transition: all 0.3s ease;
       color: white;
-      box-shadow: var(--inset-shadow),
-                  0 2px 0 rgba(255, 255, 255, 0.03);
     }
     
     .form-group input:focus,
@@ -307,8 +243,7 @@
     .form-group select:focus {
       outline: none;
       border-color: var(--secondary);
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25),
-                  var(--inset-shadow);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
     }
     
     .form-group textarea {
@@ -327,17 +262,10 @@
       position: relative;
       width: 100px;
       height: 80px;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
       border: 2px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-      transform: translateZ(5px);
-      transition: all 0.3s ease;
-    }
-    
-    .preview-item:hover {
-      transform: translateY(-5px) translateZ(5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
     
     .preview-item img {
@@ -366,58 +294,39 @@
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
     
     .remove-image:hover {
       transform: scale(1.1);
       background: #dc2626;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
     }
     
     .form-actions {
       display: flex;
       gap: 15px;
       margin-top: 20px;
-      transform: translateZ(10px);
     }
     
     .submit-btn {
-      background: linear-gradient(to bottom, var(--secondary), #2563eb);
+      background: var(--secondary);
       color: white;
       border: none;
       padding: 15px 35px;
       font-size: 1.1rem;
       font-weight: 600;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4),
-                  inset 0 -3px 0 rgba(0, 0, 0, 0.3),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .submit-btn:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
     }
     
     .submit-btn:hover {
-      background: linear-gradient(to bottom, #2563eb, #1d4ed8);
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5),
-                  inset 0 -3px 0 rgba(0, 0, 0, 0.3),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.1);
+      background: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
     }
     
     .reset-btn {
@@ -427,18 +336,15 @@
       padding: 15px 25px;
       font-size: 1.1rem;
       font-weight: 600;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
     
     .reset-btn:hover {
       color: white;
       border-color: white;
       background: rgba(255, 255, 255, 0.05);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     }
     
     /* Liste des voitures */
@@ -449,48 +355,43 @@
     .cars-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 30px;
+      gap: 25px;
     }
     
     .car-card {
-      background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
-      border-radius: 18px;
+      background: var(--card-bg);
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: var(--element-shadow);
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
       border: 1px solid rgba(255, 255, 255, 0.06);
-      position: relative;
-      transform-style: preserve-3d;
-      transform: translateZ(0);
     }
     
     .car-card:hover {
-      transform: translateY(-10px) rotateX(5deg);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-      z-index: 2;
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      border-color: rgba(59, 130, 246, 0.3);
     }
     
     .car-image {
       height: 200px;
       overflow: hidden;
       position: relative;
-      transform: translateZ(10px);
     }
     
     .car-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform 0.4s ease;
     }
     
     .car-card:hover .car-image img {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
     
     .car-content {
       padding: 20px;
-      transform: translateZ(5px);
     }
     
     .car-header {
@@ -504,7 +405,6 @@
       font-size: 1.3rem;
       font-weight: 700;
       flex: 1;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
     
     .car-price {
@@ -512,9 +412,8 @@
       font-weight: 700;
       font-size: 1.2rem;
       background: rgba(59, 130, 246, 0.15);
-      padding: 6px 15px;
+      padding: 4px 12px;
       border-radius: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     
     .car-details {
@@ -540,8 +439,8 @@
     
     .action-btn {
       flex: 1;
-      padding: 12px;
-      border-radius: 10px;
+      padding: 10px;
+      border-radius: 8px;
       border: none;
       font-weight: 600;
       cursor: pointer;
@@ -550,55 +449,36 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .action-btn:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: rgba(255, 255, 255, 0.2);
     }
     
     .edit-btn {
-      background: linear-gradient(to bottom, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.3));
+      background: rgba(59, 130, 246, 0.15);
       color: var(--secondary);
     }
     
     .edit-btn:hover {
-      background: linear-gradient(to bottom, var(--secondary), #2563eb);
+      background: var(--secondary);
       color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
     }
     
     .delete-btn {
-      background: linear-gradient(to bottom, rgba(239, 68, 68, 0.3), rgba(220, 38, 38, 0.3));
+      background: rgba(239, 68, 68, 0.15);
       color: var(--accent);
     }
     
     .delete-btn:hover {
-      background: linear-gradient(to bottom, var(--accent), #dc2626);
+      background: var(--accent);
       color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(239, 68, 68, 0.4);
     }
     
     /* Styles pour le tableau des clients */
     .clients-list {
       margin-top: 30px;
       overflow-x: auto;
-      background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
-      border-radius: 18px;
+      background: var(--card-bg);
+      border-radius: 16px;
       padding: 5px;
       border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: var(--element-shadow);
-      transform: translateZ(5px);
     }
     
     #clientsTable {
@@ -611,14 +491,13 @@
     }
     
     #clientsTable th {
-      background: linear-gradient(to bottom, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.3));
+      background: rgba(59, 130, 246, 0.2);
       padding: 16px 20px;
       text-align: left;
       font-weight: 600;
       color: #e2e8f0;
       font-size: 0.95rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
     
     #clientsTable td {
@@ -632,7 +511,7 @@
     }
     
     #clientsTable tr:hover {
-      background: rgba(59, 130, 246, 0.08);
+      background: rgba(59, 130, 246, 0.05);
     }
     
     .client-actions {
@@ -642,7 +521,7 @@
     
     .client-btn {
       padding: 8px 12px;
-      border-radius: 10px;
+      border-radius: 8px;
       border: none;
       cursor: pointer;
       display: flex;
@@ -651,43 +530,26 @@
       font-weight: 500;
       font-size: 0.9rem;
       transition: all 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .client-btn:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: rgba(255, 255, 255, 0.2);
     }
     
     .view-btn {
-      background: linear-gradient(to bottom, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.3));
-      color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
     }
     
     .view-btn:hover {
-      background: linear-gradient(to bottom, #10b981, #059669);
+      background: var(--success);
       color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
     }
     
     .delete-btn {
-      background: linear-gradient(to bottom, rgba(239, 68, 68, 0.3), rgba(220, 38, 38, 0.3));
+      background: rgba(239, 68, 68, 0.15);
       color: var(--accent);
     }
     
     .delete-btn:hover {
-      background: linear-gradient(to bottom, var(--accent), #dc2626);
+      background: var(--accent);
       color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
     }
     
     /* Miniatures photos */
@@ -701,18 +563,18 @@
       width: 40px;
       height: 40px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 6px;
       border: 1px solid rgba(255,255,255,0.1);
       cursor: pointer;
       transition: transform 0.3s ease;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     
     .mini-thumb:hover {
-      transform: scale(1.8) translateZ(10px);
+      transform: scale(1.8);
       z-index: 10;
       position: relative;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
     
     .more-photos {
@@ -720,13 +582,12 @@
       color: white;
       width: 40px;
       height: 40px;
-      border-radius: 8px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.8rem;
       font-weight: bold;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
     }
     
     .no-photos {
@@ -741,7 +602,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.85);
       display: none;
       align-items: center;
       justify-content: center;
@@ -751,27 +612,19 @@
     
     .request-modal.active {
       display: flex;
-      animation: modalAppear 0.5s ease-out;
-    }
-    
-    @keyframes modalAppear {
-      from { opacity: 0; transform: translateY(20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
     }
     
     .request-modal .modal-content {
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 18px;
+      background: #1e293b;
+      border-radius: 16px;
       max-width: 800px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
       padding: 30px;
       position: relative;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      transform-style: preserve-3d;
-      transform: translateZ(20px);
     }
     
     .request-modal .modal-header {
@@ -790,7 +643,6 @@
       align-items: center;
       gap: 10px;
       font-weight: 700;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     
     .request-modal .modal-close {
@@ -806,13 +658,11 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      transform: translateZ(10px);
     }
     
     .request-modal .modal-close:hover {
       color: var(--accent);
       background: rgba(239, 68, 68, 0.1);
-      transform: rotate(90deg) translateZ(10px);
     }
     
     .request-details {
@@ -825,12 +675,10 @@
     .detail-row {
       display: flex;
       flex-direction: column;
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(15, 23, 42, 0.4);
       padding: 18px;
-      border-radius: 14px;
+      border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: var(--inset-shadow);
-      transform: translateZ(5px);
     }
     
     .detail-row.full-width {
@@ -842,16 +690,17 @@
       color: var(--secondary);
       margin-bottom: 8px;
       font-size: 0.9rem;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     
 .detail-value {
+  font-size: 1rem;
+  color: white;
+  font-weight: 500;
   word-wrap: break-word;
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
 }
-
     
     .request-photos {
       display: grid;
@@ -864,18 +713,16 @@
       width: 100%;
       height: 150px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.1);
       cursor: pointer;
       transition: transform 0.3s ease;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-      transform: translateZ(5px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     
     .request-photos img:hover {
-      transform: scale(1.05) translateZ(10px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      z-index: 2;
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
     
     .photo-title {
@@ -885,7 +732,7 @@
       background: rgba(0,0,0,0.7);
       color: white;
       padding: 3px 8px;
-      border-radius: 5px;
+      border-radius: 4px;
       font-size: 0.8rem;
     }
     
@@ -893,22 +740,19 @@
     .login-container {
       max-width: 450px;
       width: 100%;
-      background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+      background: rgba(30, 41, 59, 0.7);
       backdrop-filter: blur(12px);
-      border-radius: 18px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: var(--depth-shadow);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      transform-style: preserve-3d;
-      animation: float 8s ease-in-out infinite;
     }
     
     .login-header {
-      background: linear-gradient(135deg, var(--primary) 0%, #1a243a 100%);
+      background: var(--primary);
       padding: 35px 30px;
       text-align: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: var(--element-shadow);
     }
     
     .login-logo {
@@ -928,29 +772,13 @@
       align-items: center;
       justify-content: center;
       font-size: 2rem;
-      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4),
-                  inset 0 -4px 0 rgba(0,0,0,0.3),
-                  inset 0 3px 0 rgba(255,255,255,0.1);
-      position: relative;
-      overflow: hidden;
-      transform: translateZ(20px);
-    }
-    
-    .login-logo-icon:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: rgba(255,255,255,0.2);
+      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3);
     }
     
     .login-title {
       font-size: 1.5rem;
       font-weight: 600;
       margin-top: 10px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     
     .login-form {
@@ -959,7 +787,6 @@
     
     .form-group-login {
       margin-bottom: 25px;
-      transform: translateZ(10px);
     }
     
     .form-group-login label {
@@ -967,36 +794,32 @@
       margin-bottom: 8px;
       font-weight: 500;
       color: #cbd5e0;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     
     .form-group-login input {
       width: 100%;
       padding: 15px;
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 1rem;
       color: white;
       transition: all 0.3s ease;
-      box-shadow: var(--inset-shadow),
-                  0 2px 0 rgba(255,255,255,0.03);
     }
     
     .form-group-login input:focus {
       outline: none;
       border-color: var(--secondary);
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25),
-                  var(--inset-shadow);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
     }
     
     .login-btn {
       width: 100%;
       padding: 16px;
-      background: linear-gradient(to bottom, var(--secondary), #2563eb);
+      background: var(--secondary);
       color: white;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
@@ -1006,71 +829,51 @@
       justify-content: center;
       gap: 10px;
       margin-top: 10px;
-      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4),
-                  inset 0 -3px 0 rgba(0,0,0,0.3),
-                  inset 0 2px 0 rgba(255,255,255,0.1);
-      position: relative;
-      overflow: hidden;
-      transform: translateZ(15px);
-    }
-    
-    .login-btn:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: rgba(255,255,255,0.2);
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
     }
     
     .login-btn:hover {
-      background: linear-gradient(to bottom, #2563eb, #1d4ed8);
-      transform: translateY(-4px) translateZ(15px);
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5),
-                  inset 0 -3px 0 rgba(0,0,0,0.3),
-                  inset 0 2px 0 rgba(255,255,255,0.1);
+      background: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
     }
     
     .notification {
       padding: 16px;
       margin: 20px 0;
-      border-radius: 12px;
+      border-radius: 10px;
       text-align: center;
       display: none;
       font-weight: 500;
       border: 1px solid transparent;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transform: translateZ(10px);
     }
     
     .success {
-      background: linear-gradient(to bottom, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2));
+      background: rgba(16, 185, 129, 0.15);
       border-color: rgba(16, 185, 129, 0.3);
       color: var(--success);
     }
     
     .error {
-      background: linear-gradient(to bottom, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+      background: rgba(239, 68, 68, 0.15);
       border-color: rgba(239, 68, 68, 0.3);
       color: var(--accent);
     }
     
     /* Styles améliorés pour les messages de contact */
     .contact-message {
-      background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.6));
-      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 16px;
       padding: 20px;
       margin-bottom: 20px;
       border-left: 4px solid var(--info);
       transition: all 0.3s ease;
-      box-shadow: var(--element-shadow);
-      transform: translateZ(5px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
     
     .contact-message.unread {
       border-left: 4px solid var(--warning);
-      background: linear-gradient(145deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.15));
+      background: rgba(245, 158, 11, 0.1);
     }
     
     .contact-message.archived {
@@ -1096,7 +899,6 @@
       font-weight: 700;
       color: var(--secondary);
       margin-bottom: 5px;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     
     .message-date {
@@ -1116,11 +918,10 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      background: rgba(30, 41, 59, 0.7);
+      background: rgba(30, 41, 59, 0.6);
       padding: 5px 12px;
       border-radius: 20px;
       font-size: 0.9rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     
     .message-body {
@@ -1142,21 +943,20 @@
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 600;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     
     .status-new {
-      background: linear-gradient(to bottom, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.3));
+      background: rgba(245, 158, 11, 0.2);
       color: var(--warning);
     }
     
     .status-read {
-      background: linear-gradient(to bottom, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.3));
+      background: rgba(16, 185, 129, 0.2);
       color: var(--success);
     }
     
     .status-archived {
-      background: linear-gradient(to bottom, rgba(100, 116, 139, 0.3), rgba(71, 85, 105, 0.3));
+      background: rgba(100, 116, 139, 0.2);
       color: var(--gray);
     }
     
@@ -1171,7 +971,6 @@
   white-space: normal;
   overflow: hidden;
 }
-
     
     /* Responsive */
     @media (max-width: 1200px) {
@@ -1200,6 +999,43 @@
       .admin-nav li {
         flex: 1;
         min-width: 150px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .form-group {
+        flex: 1 0 calc(100% - 30px);
+      }
+      
+      .form-actions {
+        flex-direction: column;
+      }
+      
+      .submit-btn, .reset-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .request-details {
+        grid-template-columns: 1fr;
+      }
+      
+      .client-actions {
+        flex-direction: column;
+      }
+      
+      .admin-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .admin-logo {
+        justify-content: center;
+      }
+      
+      .logout-btn {
+        width: 100%;
       }
     }
     .filter-options {
@@ -1238,43 +1074,6 @@
   box-shadow: 0 4px 12px rgba(59,130,246,0.3);
 }
 
-    @media (max-width: 768px) {
-      .form-group {
-        flex: 1 0 calc(100% - 30px);
-      }
-      
-      .form-actions {
-        flex-direction: column;
-      }
-      
-      .submit-btn, .reset-btn {
-        width: 100%;
-        justify-content: center;
-      }
-      
-      .request-details {
-        grid-template-columns: 1fr;
-      }
-      
-      .client-actions {
-        flex-direction: column;
-      }
-      
-      .admin-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-      }
-      
-      .admin-logo {
-        justify-content: center;
-      }
-      
-      .logout-btn {
-        width: 100%;
-      }
-    }
-    
     @media (max-width: 576px) {
       .cars-grid {
         grid-template-columns: 1fr;
@@ -1564,7 +1363,7 @@
             </h3>
             
             <div class="form-actions">
-              <button type="button" class="submit-btn" id="exportDataBtn" style="background: linear-gradient(to bottom, #10b981, #059669);">
+              <button type="button" class="submit-btn" id="exportDataBtn" style="background: var(--success);">
                 <i class="fas fa-file-export"></i> Exporter les données
               </button>
               <button type="button" class="reset-btn" id="importDataBtn">
