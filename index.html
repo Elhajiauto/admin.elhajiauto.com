@@ -1789,7 +1789,7 @@
     // Charger les demandes de vente des clients
     async function loadSellRequests() {
       try {
-        const snapshot = await sellRequestsCollection.orderBy("date", "desc").get();
+        const snapshot = await sellRequestsCollection.orderBy("timestamp", "desc").get();
         const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         renderSellRequests(requests);
       } catch (error) {
@@ -1817,7 +1817,7 @@
       requests.forEach(request => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${formatDate(request.date)}</td>
+          <td>${formatDate(request.timestamp || request.date)}</td>
           <td>${request.name}</td>
           <td>${request.phone}</td>
           <td>${request.brand} ${request.model}</td>
