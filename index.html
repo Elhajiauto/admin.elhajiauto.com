@@ -593,6 +593,20 @@
     .no-photos {
       color: #94a3b8;
       font-size: 0.9rem;
+      text-align: center;
+      padding: 20px;
+      grid-column: 1 / -1;
+    }
+    
+    .no-photos i {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+      color: var(--gray);
+    }
+    
+    .has-photos {
+      color: var(--success);
     }
     
     /* Modal demande client */
@@ -692,15 +706,15 @@
       font-size: 0.9rem;
     }
     
-.detail-value {
-  font-size: 1rem;
-  color: white;
-  font-weight: 500;
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  white-space: pre-wrap;
-}
+    .detail-value {
+      font-size: 1rem;
+      color: white;
+      font-weight: 500;
+      word-wrap: break-word;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+    }
     
     .request-photos {
       display: grid;
@@ -709,11 +723,18 @@
       margin-top: 25px;
     }
     
+    .photo-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    
     .request-photos img {
       width: 100%;
       height: 150px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 6px;
       border: 1px solid rgba(255,255,255,0.1);
       cursor: pointer;
       transition: transform 0.3s ease;
@@ -960,17 +981,16 @@
       color: var(--gray);
     }
     
-.message-content {
-  line-height: 1.6;
-  color: #e2e8f0;
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow-wrap: break-word;
-
-  max-width: 100%;
-  white-space: normal;
-  overflow: hidden;
-}
+    .message-content {
+      line-height: 1.6;
+      color: #e2e8f0;
+      word-wrap: break-word;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
+      white-space: normal;
+      overflow: hidden;
+    }
     
     /* Responsive */
     @media (max-width: 1200px) {
@@ -1038,42 +1058,43 @@
         width: 100%;
       }
     }
+    
     .filter-options {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  padding: 10px 20px;
-  border-radius: 25px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
-  color: #cbd5e0;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.filter-btn:hover {
-  background: var(--secondary);
-  color: white;
-  transform: translateY(-1px);
-}
-
-.filter-btn.active {
-  background: var(--secondary);
-  color: white;
-  border-color: var(--secondary);
-  box-shadow: 0 4px 12px rgba(59,130,246,0.3);
-}
-
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: #cbd5e0;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .filter-btn:hover {
+      background: var(--secondary);
+      color: white;
+      transform: translateY(-1px);
+    }
+    
+    .filter-btn.active {
+      background: var(--secondary);
+      color: white;
+      border-color: var(--secondary);
+      box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+    }
+    
     @media (max-width: 576px) {
       .cars-grid {
         grid-template-columns: 1fr;
@@ -1094,6 +1115,10 @@
       
       .car-form {
         padding: 20px;
+      }
+      
+      .request-photos {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -1291,6 +1316,7 @@
                   <th>Nom</th>
                   <th>Téléphone</th>
                   <th>Marque/Modèle</th>
+                  <th>Photos</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -1309,17 +1335,17 @@
             <i class="fas fa-check-circle"></i> Opération effectuée avec succès !
           </div>
           
-<div class="filter-options">
-  <button class="filter-btn active" data-filter="all">
-    <i class="fas fa-inbox"></i> Tous
-  </button>
-  <button class="filter-btn" data-filter="unread">
-    <i class="fas fa-envelope-open-text"></i> Non lus
-  </button>
-  <button class="filter-btn" data-filter="archived">
-    <i class="fas fa-archive"></i> Archivés
-  </button>
-</div>
+          <div class="filter-options">
+            <button class="filter-btn active" data-filter="all">
+              <i class="fas fa-inbox"></i> Tous
+            </button>
+            <button class="filter-btn" data-filter="unread">
+              <i class="fas fa-envelope-open-text"></i> Non lus
+            </button>
+            <button class="filter-btn" data-filter="archived">
+              <i class="fas fa-archive"></i> Archivés
+            </button>
+          </div>
           
           <div class="messages-list" id="messagesList">
             <!-- Les messages seront injectés ici par JavaScript -->
@@ -1805,7 +1831,7 @@
       if (requests.length === 0) {
         tableBody.innerHTML = `
           <tr>
-            <td colspan="5" style="text-align: center; padding: 30px; color: #a0aec0;">
+            <td colspan="6" style="text-align: center; padding: 30px; color: #a0aec0;">
               <i class="fas fa-file-alt" style="font-size: 2rem; margin-bottom: 15px; display: block;"></i>
               Aucune demande de vente pour le moment
             </td>
@@ -1821,6 +1847,11 @@
           <td>${request.name}</td>
           <td>${request.phone}</td>
           <td>${request.brand} ${request.model}</td>
+          <td>
+            ${request.images && request.images.length > 0 ? 
+              '<span class="has-photos"><i class="fas fa-camera"></i> Oui</span>' : 
+              '<span class="no-photos"><i class="fas fa-camera-slash"></i> Non</span>'}
+          </td>
           <td>
             <div class="client-actions">
               <button class="client-btn view-btn" data-id="${request.id}">
@@ -1873,112 +1904,215 @@
       });
     }
     
-    // Voir les détails d'une demande
-    async function viewRequest(requestId) {
-      try {
-        const doc = await sellRequestsCollection.doc(requestId).get();
-        if (!doc.exists) return;
-        
-        const request = doc.data();
-        
-        // Remplir les détails dans le modal
-        requestDetails.innerHTML = `
-          <div class="detail-row">
-            <span class="detail-label">Date de la demande</span>
-            <span class="detail-value">${formatDate(request.date)}</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Nom complet</span>
-            <span class="detail-value">${request.name}</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Téléphone</span>
-            <span class="detail-value">${request.phone}</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Email</span>
-            <span class="detail-value">${request.email || 'Non fourni'}</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Marque</span>
-            <span class="detail-value">${request.brand}</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Modèle</span>
-            <span class="detail-value">${request.model}</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Année</span>
-            <span class="detail-value">${request.year}</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Kilométrage</span>
-            <span class="detail-value">${request.mileage} km</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Carburant</span>
-            <span class="detail-value">${request.fuel}</span>
-          </div>
-          
-          <div class="detail-row">
-            <span class="detail-label">Transmission</span>
-            <span class="detail-value">${request.transmission}</span>
-          </div>
-          
-          <div class="detail-row full-width">
-            <span class="detail-label">État du véhicule</span>
-            <span class="detail-value">${request.condition || 'Non spécifié'}</span>
-          </div>
-        `;
-        
-        // Afficher les photos
-        requestPhotos.innerHTML = '';
-        if (request.images && request.images.length > 0) {
-          request.images.forEach((image, index) => {
-            const imgContainer = document.createElement('div');
-            imgContainer.style.position = 'relative';
-            imgContainer.style.overflow = 'hidden';
-            imgContainer.style.borderRadius = '6px';
-            
-            const img = document.createElement('img');
-            img.src = image;
-            img.alt = `Photo du véhicule ${index + 1}`;
-            img.style.cursor = 'pointer';
-            img.style.width = '100%';
-            img.style.height = '150px';
-            img.style.objectFit = 'cover';
-            
-            const imgTitle = document.createElement('div');
-            imgTitle.textContent = `Photo ${index + 1}`;
-            imgTitle.className = 'photo-title';
-            
-            imgContainer.appendChild(img);
-            imgContainer.appendChild(imgTitle);
-            requestPhotos.appendChild(imgContainer);
-          });
-        } else {
-          requestPhotos.innerHTML = `
-            <div class="no-photos" style="grid-column: 1/-1; text-align: center; padding: 20px; color: #a0aec0;">
-              <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
-              Aucune photo fournie
-            </div>
-          `;
-        }
-        
-        // Afficher le modal
-        requestModal.classList.add('active');
-      } catch (error) {
-        console.error("Erreur lors de l'affichage de la demande:", error);
-      }
+// Voir les détails d'une demande
+async function viewRequest(requestId) {
+  try {
+    const doc = await sellRequestsCollection.doc(requestId).get();
+    if (!doc.exists) return;
+
+    const request = doc.data();
+
+    // نحضّرو الصور من "images" أو "photos"
+    const images = request.images || request.photos || [];
+
+    // Remplir les détails dans le modal
+    requestDetails.innerHTML = `
+      <div class="detail-row">
+        <span class="detail-label">Date de la demande</span>
+        <span class="detail-value">${formatDate(request.timestamp || request.date)}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Nom complet</span>
+        <span class="detail-value">${request.name}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Téléphone</span>
+        <span class="detail-value">${request.phone}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Email</span>
+        <span class="detail-value">${request.email || 'Non fourni'}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Marque</span>
+        <span class="detail-value">${request.brand}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Modèle</span>
+        <span class="detail-value">${request.model}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Année</span>
+        <span class="detail-value">${request.year}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Kilométrage</span>
+        <span class="detail-value">${request.mileage} km</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Carburant</span>
+        <span class="detail-value">${request.fuel}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Transmission</span>
+        <span class="detail-value">${request.transmission}</span>
+      </div>
+      
+      <div class="detail-row full-width">
+        <span class="detail-label">État du véhicule</span>
+        <span class="detail-value">${request.condition || 'Non spécifié'}</span>
+      </div>
+    `;
+
+    // Afficher les photos
+    requestPhotos.innerHTML = '';
+    if (images.length > 0) {
+      images.forEach((image, index) => {
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'photo-container';
+
+        const img = document.createElement('img');
+        img.src = image;
+        img.alt = `Photo du véhicule ${index + 1}`;
+        img.className = 'photo-thumb';
+
+        const imgTitle = document.createElement('div');
+        imgTitle.textContent = `Photo ${index + 1}`;
+        imgTitle.className = 'photo-title';
+
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(imgTitle);
+        requestPhotos.appendChild(imgContainer);
+      });
+    } else {
+      requestPhotos.innerHTML = `
+        <div class="no-photos">
+          <i class="fas fa-camera-slash"></i>
+          Le client n'a fourni aucune photo du véhicule
+        </div>
+      `;
     }
+
+    // Afficher le modal
+    requestModal.classList.add('active');
+  } catch (error) {
+    console.error("Erreur lors de l'affichage de la demande:", error);
+  }
+}
+// Voir les détails d'une demande
+async function viewRequest(requestId) {
+  try {
+    const doc = await sellRequestsCollection.doc(requestId).get();
+    if (!doc.exists) return;
+
+    const request = doc.data();
+
+    // نحضّرو الصور من "images" أو "photos"
+    const images = request.images || request.photos || [];
+
+    // Remplir les détails dans le modal
+    requestDetails.innerHTML = `
+      <div class="detail-row">
+        <span class="detail-label">Date de la demande</span>
+        <span class="detail-value">${formatDate(request.timestamp || request.date)}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Nom complet</span>
+        <span class="detail-value">${request.name}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Téléphone</span>
+        <span class="detail-value">${request.phone}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Email</span>
+        <span class="detail-value">${request.email || 'Non fourni'}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Marque</span>
+        <span class="detail-value">${request.brand}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Modèle</span>
+        <span class="detail-value">${request.model}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Année</span>
+        <span class="detail-value">${request.year}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Kilométrage</span>
+        <span class="detail-value">${request.mileage} km</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Carburant</span>
+        <span class="detail-value">${request.fuel}</span>
+      </div>
+      
+      <div class="detail-row">
+        <span class="detail-label">Transmission</span>
+        <span class="detail-value">${request.transmission}</span>
+      </div>
+      
+      <div class="detail-row full-width">
+        <span class="detail-label">État du véhicule</span>
+        <span class="detail-value">${request.condition || 'Non spécifié'}</span>
+      </div>
+    `;
+
+    // Afficher les photos
+    requestPhotos.innerHTML = '';
+    if (images.length > 0) {
+      images.forEach((image, index) => {
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'photo-container';
+
+        const img = document.createElement('img');
+        img.src = image;
+        img.alt = `Photo du véhicule ${index + 1}`;
+        img.className = 'photo-thumb';
+
+        const imgTitle = document.createElement('div');
+        imgTitle.textContent = `Photo ${index + 1}`;
+        imgTitle.className = 'photo-title';
+
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(imgTitle);
+        requestPhotos.appendChild(imgContainer);
+      });
+    } else {
+      requestPhotos.innerHTML = `
+        <div class="no-photos">
+          <i class="fas fa-camera-slash"></i>
+          Le client n'a fourni aucune photo du véhicule
+        </div>
+      `;
+    }
+
+    // Afficher le modal
+    requestModal.classList.add('active');
+  } catch (error) {
+    console.error("Erreur lors de l'affichage de la demande:", error);
+  }
+}
+
     
     // Supprimer une demande
     async function deleteRequest(requestId) {
