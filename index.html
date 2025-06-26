@@ -2426,6 +2426,96 @@ filterButtons.forEach(button => {
         }
       });
     });
+	// EXPORT
+document.getElementById("exportDataBtn").addEventListener("click", async () => {
+  try {
+    const carsSnap = await carsCollection.get();
+    const sellSnap = await sellRequestsCollection.get();
+    const contactSnap = await contactMessagesCollection.get();
+
+    const data = {
+      cars: carsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+      demandes: sellSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+      messages: contactSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "elhaji-auto-donnees.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    alert("خطأ فالتصدير: " + error.message);
+  }
+});
+
+// IMPORT
+document.getElementById("importDataBtn").addEventListener("click", () => {
+  document.getElementById("importFileInput").click();
+});
+
+document.getElementById("importFileInput").addEventListener("change", async function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    if (data.cars) {
+      for (const car of data.cars) {
+        await carsCollection.doc(car.id).set(car);
+      }
+    }
+
+    if (data.demandes) {
+      for (const demande of data.demandes) {
+        await sellRequestsCollection.doc(demande.id).set(demande);
+      }
+    }
+
+    if (data.messages) {
+      for (const msg of data.messages) {
+        await contactMessagesCollection.doc(msg.id).set(msg);
+      }
+    }
+
+    alert("✅ تم استيراد البيانات بنجاح.");
+    loadCars();
+    loadSellRequests();
+    loadContactMessages();
+  } catch (error) {
+    alert("❌ خطأ فالإستيراد: " + error.message);
+  }
+});
+
+// RESET
+document.getElementById("resetDataBtn").addEventListener("click", async () => {
+  if (!confirm("بغيت تحيد جميع البيانات؟ هادشي مايمكنش ترجاعو.")) return;
+
+  try {
+    const carsSnap = await carsCollection.get();
+    for (const doc of carsSnap.docs) await doc.ref.delete();
+
+    const sellSnap = await sellRequestsCollection.get();
+    for (const doc of sellSnap.docs) await doc.ref.delete();
+
+    const contactSnap = await contactMessagesCollection.get();
+    for (const doc of contactSnap.docs) await doc.ref.delete();
+
+    alert("🗑️ تم حذف جميع البيانات بنجاح.");
+    loadCars();
+    loadSellRequests();
+    loadContactMessages();
+  } catch (error) {
+    alert("❌ خطأ فالحذف: " + error.message);
+  }
+});
+
   </script>
 </body>
 </html>
