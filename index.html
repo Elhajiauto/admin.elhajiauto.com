@@ -2231,7 +2231,30 @@ async function viewRequest(requestId) {
         });
       });
     }
-    
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // نحيدو class active من جميع الأزرار
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    // و نزيدوها للي ضغطنا عليه
+    button.classList.add('active');
+
+    const filter = button.getAttribute('data-filter'); // all / unread / archived
+    const messages = document.querySelectorAll('.contact-message');
+
+    messages.forEach(message => {
+      if (filter === 'all') {
+        message.style.display = 'block';
+      } else if (filter === 'unread') {
+        message.style.display = message.classList.contains('unread') ? 'block' : 'none';
+      } else if (filter === 'archived') {
+        message.style.display = message.classList.contains('archived') ? 'block' : 'none';
+      }
+    });
+  });
+});
+
     // Fonction pour obtenir le libellé du sujet
     function getSubjectLabel(subject) {
       const subjects = {
