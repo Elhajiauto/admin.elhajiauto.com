@@ -552,63 +552,6 @@
       color: white;
     }
     
-    /* Miniatures photos */
-    .mini-photos {
-      display: flex;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-    
-    .mini-thumb {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.1);
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    
-    .mini-thumb:hover {
-      transform: scale(1.8);
-      z-index: 10;
-      position: relative;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    
-    .more-photos {
-      background: rgba(59, 130, 246, 0.6);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-    
-    .no-photos {
-      color: #94a3b8;
-      font-size: 0.9rem;
-      text-align: center;
-      padding: 20px;
-      grid-column: 1 / -1;
-    }
-    
-    .no-photos i {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      display: block;
-      color: var(--gray);
-    }
-    
-    .has-photos {
-      color: var(--success);
-    }
-    
     /* Modal demande client */
     .request-modal {
       position: fixed;
@@ -1399,6 +1342,7 @@
                 <i class="fas fa-trash-alt"></i> Réinitialiser les données
               </button>
             </div>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
           </div>
         </section>
       </main>
@@ -1904,215 +1848,108 @@
       });
     }
     
-// Voir les détails d'une demande
-async function viewRequest(requestId) {
-  try {
-    const doc = await sellRequestsCollection.doc(requestId).get();
-    if (!doc.exists) return;
+    // Voir les détails d'une demande
+    async function viewRequest(requestId) {
+      try {
+        const doc = await sellRequestsCollection.doc(requestId).get();
+        if (!doc.exists) return;
 
-    const request = doc.data();
+        const request = doc.data();
+        const images = request.images || request.photos || [];
 
-    // نحضّرو الصور من "images" أو "photos"
-    const images = request.images || request.photos || [];
+        // Remplir les détails dans le modal
+        requestDetails.innerHTML = `
+          <div class="detail-row">
+            <span class="detail-label">Date de la demande</span>
+            <span class="detail-value">${formatDate(request.timestamp || request.date)}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Nom complet</span>
+            <span class="detail-value">${request.name}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Téléphone</span>
+            <span class="detail-value">${request.phone}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">${request.email || 'Non fourni'}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Marque</span>
+            <span class="detail-value">${request.brand}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Modèle</span>
+            <span class="detail-value">${request.model}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Année</span>
+            <span class="detail-value">${request.year}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Kilométrage</span>
+            <span class="detail-value">${request.mileage} km</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Carburant</span>
+            <span class="detail-value">${request.fuel}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Transmission</span>
+            <span class="detail-value">${request.transmission}</span>
+          </div>
+          
+          <div class="detail-row full-width">
+            <span class="detail-label">État du véhicule</span>
+            <span class="detail-value">${request.condition || 'Non spécifié'}</span>
+          </div>
+        `;
 
-    // Remplir les détails dans le modal
-    requestDetails.innerHTML = `
-      <div class="detail-row">
-        <span class="detail-label">Date de la demande</span>
-        <span class="detail-value">${formatDate(request.timestamp || request.date)}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Nom complet</span>
-        <span class="detail-value">${request.name}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Téléphone</span>
-        <span class="detail-value">${request.phone}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Email</span>
-        <span class="detail-value">${request.email || 'Non fourni'}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Marque</span>
-        <span class="detail-value">${request.brand}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Modèle</span>
-        <span class="detail-value">${request.model}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Année</span>
-        <span class="detail-value">${request.year}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Kilométrage</span>
-        <span class="detail-value">${request.mileage} km</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Carburant</span>
-        <span class="detail-value">${request.fuel}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Transmission</span>
-        <span class="detail-value">${request.transmission}</span>
-      </div>
-      
-      <div class="detail-row full-width">
-        <span class="detail-label">État du véhicule</span>
-        <span class="detail-value">${request.condition || 'Non spécifié'}</span>
-      </div>
-    `;
+        // Afficher les photos
+        requestPhotos.innerHTML = '';
+        if (images.length > 0) {
+          images.forEach((image, index) => {
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'photo-container';
 
-    // Afficher les photos
-    requestPhotos.innerHTML = '';
-    if (images.length > 0) {
-      images.forEach((image, index) => {
-        const imgContainer = document.createElement('div');
-        imgContainer.className = 'photo-container';
+            const img = document.createElement('img');
+            img.src = image;
+            img.alt = `Photo du véhicule ${index + 1}`;
+            img.className = 'photo-thumb';
 
-        const img = document.createElement('img');
-        img.src = image;
-        img.alt = `Photo du véhicule ${index + 1}`;
-        img.className = 'photo-thumb';
+            const imgTitle = document.createElement('div');
+            imgTitle.textContent = `Photo ${index + 1}`;
+            imgTitle.className = 'photo-title';
 
-        const imgTitle = document.createElement('div');
-        imgTitle.textContent = `Photo ${index + 1}`;
-        imgTitle.className = 'photo-title';
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(imgTitle);
+            requestPhotos.appendChild(imgContainer);
+          });
+        } else {
+          requestPhotos.innerHTML = `
+            <div class="no-photos">
+              <i class="fas fa-camera-slash"></i>
+              Le client n'a fourni aucune photo du véhicule
+            </div>
+          `;
+        }
 
-        imgContainer.appendChild(img);
-        imgContainer.appendChild(imgTitle);
-        requestPhotos.appendChild(imgContainer);
-      });
-    } else {
-      requestPhotos.innerHTML = `
-        <div class="no-photos">
-          <i class="fas fa-camera-slash"></i>
-          Le client n'a fourni aucune photo du véhicule
-        </div>
-      `;
+        // Afficher le modal
+        requestModal.classList.add('active');
+      } catch (error) {
+        console.error("Erreur lors de l'affichage de la demande:", error);
+      }
     }
-
-    // Afficher le modal
-    requestModal.classList.add('active');
-  } catch (error) {
-    console.error("Erreur lors de l'affichage de la demande:", error);
-  }
-}
-// Voir les détails d'une demande
-async function viewRequest(requestId) {
-  try {
-    const doc = await sellRequestsCollection.doc(requestId).get();
-    if (!doc.exists) return;
-
-    const request = doc.data();
-
-    // نحضّرو الصور من "images" أو "photos"
-    const images = request.images || request.photos || [];
-
-    // Remplir les détails dans le modal
-    requestDetails.innerHTML = `
-      <div class="detail-row">
-        <span class="detail-label">Date de la demande</span>
-        <span class="detail-value">${formatDate(request.timestamp || request.date)}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Nom complet</span>
-        <span class="detail-value">${request.name}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Téléphone</span>
-        <span class="detail-value">${request.phone}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Email</span>
-        <span class="detail-value">${request.email || 'Non fourni'}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Marque</span>
-        <span class="detail-value">${request.brand}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Modèle</span>
-        <span class="detail-value">${request.model}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Année</span>
-        <span class="detail-value">${request.year}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Kilométrage</span>
-        <span class="detail-value">${request.mileage} km</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Carburant</span>
-        <span class="detail-value">${request.fuel}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Transmission</span>
-        <span class="detail-value">${request.transmission}</span>
-      </div>
-      
-      <div class="detail-row full-width">
-        <span class="detail-label">État du véhicule</span>
-        <span class="detail-value">${request.condition || 'Non spécifié'}</span>
-      </div>
-    `;
-
-    // Afficher les photos
-    requestPhotos.innerHTML = '';
-    if (images.length > 0) {
-      images.forEach((image, index) => {
-        const imgContainer = document.createElement('div');
-        imgContainer.className = 'photo-container';
-
-        const img = document.createElement('img');
-        img.src = image;
-        img.alt = `Photo du véhicule ${index + 1}`;
-        img.className = 'photo-thumb';
-
-        const imgTitle = document.createElement('div');
-        imgTitle.textContent = `Photo ${index + 1}`;
-        imgTitle.className = 'photo-title';
-
-        imgContainer.appendChild(img);
-        imgContainer.appendChild(imgTitle);
-        requestPhotos.appendChild(imgContainer);
-      });
-    } else {
-      requestPhotos.innerHTML = `
-        <div class="no-photos">
-          <i class="fas fa-camera-slash"></i>
-          Le client n'a fourni aucune photo du véhicule
-        </div>
-      `;
-    }
-
-    // Afficher le modal
-    requestModal.classList.add('active');
-  } catch (error) {
-    console.error("Erreur lors de l'affichage de la demande:", error);
-  }
-}
-
     
     // Supprimer une demande
     async function deleteRequest(requestId) {
@@ -2231,30 +2068,7 @@ async function viewRequest(requestId) {
         });
       });
     }
-    const filterButtons = document.querySelectorAll('.filter-btn');
-
-filterButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    // نحيدو class active من جميع الأزرار
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    // و نزيدوها للي ضغطنا عليه
-    button.classList.add('active');
-
-    const filter = button.getAttribute('data-filter'); // all / unread / archived
-    const messages = document.querySelectorAll('.contact-message');
-
-    messages.forEach(message => {
-      if (filter === 'all') {
-        message.style.display = 'block';
-      } else if (filter === 'unread') {
-        message.style.display = message.classList.contains('unread') ? 'block' : 'none';
-      } else if (filter === 'archived') {
-        message.style.display = message.classList.contains('archived') ? 'block' : 'none';
-      }
-    });
-  });
-});
-
+    
     // Fonction pour obtenir le libellé du sujet
     function getSubjectLabel(subject) {
       const subjects = {
@@ -2410,6 +2224,96 @@ filterButtons.forEach(button => {
       }
     });
     
+    // EXPORT
+    document.getElementById("exportDataBtn").addEventListener("click", async () => {
+      try {
+        const carsSnap = await carsCollection.get();
+        const sellSnap = await sellRequestsCollection.get();
+        const contactSnap = await contactMessagesCollection.get();
+
+        const data = {
+          cars: carsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+          demandes: sellSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+          messages: contactSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+        };
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "elhaji-auto-donnees.json";
+        a.click();
+
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        alert("Erreur lors de l'exportation: " + error.message);
+      }
+    });
+
+    // IMPORT
+    document.getElementById("importDataBtn").addEventListener("click", () => {
+      document.getElementById("importFileInput").click();
+    });
+
+    document.getElementById("importFileInput").addEventListener("change", async function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+
+        if (data.cars) {
+          for (const car of data.cars) {
+            await carsCollection.doc(car.id).set(car);
+          }
+        }
+
+        if (data.demandes) {
+          for (const demande of data.demandes) {
+            await sellRequestsCollection.doc(demande.id).set(demande);
+          }
+        }
+
+        if (data.messages) {
+          for (const msg of data.messages) {
+            await contactMessagesCollection.doc(msg.id).set(msg);
+          }
+        }
+
+        alert("Données importées avec succès !");
+        loadCars();
+        loadSellRequests();
+        loadContactMessages();
+      } catch (error) {
+        alert("Erreur lors de l'importation: " + error.message);
+      }
+    });
+
+    // RESET
+    document.getElementById("resetDataBtn").addEventListener("click", async () => {
+      if (!confirm("Êtes-vous sûr de vouloir supprimer toutes les données ? Cette action est irréversible.")) return;
+
+      try {
+        const carsSnap = await carsCollection.get();
+        for (const doc of carsSnap.docs) await doc.ref.delete();
+
+        const sellSnap = await sellRequestsCollection.get();
+        for (const doc of sellSnap.docs) await doc.ref.delete();
+
+        const contactSnap = await contactMessagesCollection.get();
+        for (const doc of contactSnap.docs) await doc.ref.delete();
+
+        alert("Données supprimées avec succès !");
+        loadCars();
+        loadSellRequests();
+        loadContactMessages();
+      } catch (error) {
+        alert("Erreur lors de la suppression: " + error.message);
+      }
+    });
+
     // Initialisation
     document.addEventListener('DOMContentLoaded', () => {
       // Vérifier si l'utilisateur est déjà connecté
@@ -2425,97 +2329,29 @@ filterButtons.forEach(button => {
           document.getElementById('username').focus();
         }
       });
+
+      // Filtrage des messages
+      document.getElementById('contactSection').addEventListener('click', function(e) {
+        const filterBtn = e.target.closest('.filter-btn');
+        if (filterBtn) {
+          document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+          filterBtn.classList.add('active');
+          
+          const filter = filterBtn.getAttribute('data-filter');
+          const messages = document.querySelectorAll('.contact-message');
+          
+          messages.forEach(message => {
+            if (filter === 'all') {
+              message.style.display = 'block';
+            } else if (filter === 'unread') {
+              message.style.display = message.classList.contains('unread') ? 'block' : 'none';
+            } else if (filter === 'archived') {
+              message.style.display = message.classList.contains('archived') ? 'block' : 'none';
+            }
+          });
+        }
+      });
     });
-	// EXPORT
-document.getElementById("exportDataBtn").addEventListener("click", async () => {
-  try {
-    const carsSnap = await carsCollection.get();
-    const sellSnap = await sellRequestsCollection.get();
-    const contactSnap = await contactMessagesCollection.get();
-
-    const data = {
-      cars: carsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })),
-      demandes: sellSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })),
-      messages: contactSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-    };
-
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "elhaji-auto-donnees.json";
-    a.click();
-
-    URL.revokeObjectURL(url);
-  } catch (error) {
-    alert("خطأ فالتصدير: " + error.message);
-  }
-});
-
-// IMPORT
-document.getElementById("importDataBtn").addEventListener("click", () => {
-  document.getElementById("importFileInput").click();
-});
-
-document.getElementById("importFileInput").addEventListener("change", async function () {
-  const file = this.files[0];
-  if (!file) return;
-
-  try {
-    const text = await file.text();
-    const data = JSON.parse(text);
-
-    if (data.cars) {
-      for (const car of data.cars) {
-        await carsCollection.doc(car.id).set(car);
-      }
-    }
-
-    if (data.demandes) {
-      for (const demande of data.demandes) {
-        await sellRequestsCollection.doc(demande.id).set(demande);
-      }
-    }
-
-    if (data.messages) {
-      for (const msg of data.messages) {
-        await contactMessagesCollection.doc(msg.id).set(msg);
-      }
-    }
-
-    alert("✅ تم استيراد البيانات بنجاح.");
-    loadCars();
-    loadSellRequests();
-    loadContactMessages();
-  } catch (error) {
-    alert("❌ خطأ فالإستيراد: " + error.message);
-  }
-});
-
-// RESET
-document.getElementById("resetDataBtn").addEventListener("click", async () => {
-  if (!confirm("بغيت تحيد جميع البيانات؟ هادشي مايمكنش ترجاعو.")) return;
-
-  try {
-    const carsSnap = await carsCollection.get();
-    for (const doc of carsSnap.docs) await doc.ref.delete();
-
-    const sellSnap = await sellRequestsCollection.get();
-    for (const doc of sellSnap.docs) await doc.ref.delete();
-
-    const contactSnap = await contactMessagesCollection.get();
-    for (const doc of contactSnap.docs) await doc.ref.delete();
-
-    alert("🗑️ تم حذف جميع البيانات بنجاح.");
-    loadCars();
-    loadSellRequests();
-    loadContactMessages();
-  } catch (error) {
-    alert("❌ خطأ فالحذف: " + error.message);
-  }
-});
-
   </script>
 </body>
 </html>
